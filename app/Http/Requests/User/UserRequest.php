@@ -24,18 +24,18 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['string', 'required'],
+            'name'  => ['string', 'required'],
             'email' => [
                 'string',
                 'required',
-                Rule::unique('users', 'email')->ignore(request()->route('user_id'))
+                Rule::unique('users', 'email')->ignore(request()->route('user_id')),
             ],
-            'password' => 'required'
+            'password' => 'required',
         ];
 
-//        if (!is_null(request()->route('user_id'))) {
-//            $rules['email'][] = 'unique:users,email';
-//        }
+        //        if (!is_null(request()->route('user_id'))) {
+        //            $rules['email'][] = 'unique:users,email';
+        //        }
 
         return $rules;
     }

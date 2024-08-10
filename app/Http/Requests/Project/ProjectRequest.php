@@ -25,13 +25,13 @@ class ProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'        => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['sometimes', 'string', 'max:200'],
-            'start_date'  => 'required',
-            'end_date'    => 'required',
-            'status'      => ['sometimes', 'int'],
-            'users.*.id' => ['required', 'int'],
-            'users.*.role' => Rule::enum(ProjectUserRoleEnum::class)
+            'name'         => ['required', 'string', 'min:3', 'max:100'],
+            'description'  => ['sometimes', 'string', 'max:200'],
+            'start_date'   => 'required',
+            'end_date'     => 'required',
+            'status'       => ['sometimes', 'int'],
+            'users.*.id'   => ['required', 'int'],
+            'users.*.role' => Rule::enum(ProjectUserRoleEnum::class),
         ];
     }
 }

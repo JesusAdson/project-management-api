@@ -24,6 +24,8 @@ class UpdateProject
         try {
             $project = $this->getProject($project_id);
 
+            $this->attachUsers($project, $data['users']);
+
             $project->update($data);
             DB::commit();
 
@@ -50,5 +52,14 @@ class UpdateProject
         }
 
         return $project;
+    }
+
+    private function attachUsers(Project $project, array $users): void
+    {
+        $project->users()->detach();
+
+        foreach ($users as $user) {
+            $project->users()->attach($user['id'], ['role' => $user['role']]);
+        }
     }
 }

@@ -24,6 +24,7 @@ class CreateProject
             $project = Project::query()->create($data);
 
             $this->attachUsers($project, $data['users']);
+
             DB::commit();
 
             return new ProjectResource($project);

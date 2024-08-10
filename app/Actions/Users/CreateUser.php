@@ -27,6 +27,7 @@ class CreateUser
             return new UserResource($user);
         } catch (Exception $e) {
             DB::rollBack();
+
             throw new DefaultException($e->getMessage());
         }
     }
