@@ -22,6 +22,9 @@ class CreateProject
 
         try {
             $project = Project::query()->create($data);
+
+            $this->attachUsers($project, $data['users']);
+
             DB::commit();
 
             return new ProjectResource($project);
@@ -29,6 +32,15 @@ class CreateProject
             DB::rollBack();
 
             throw new DefaultException($e->getMessage());
+        }
+    }
+
+    private function attachUsers(Project $project, array $users): void
+    {
+        $project->users()->detach();
+
+        foreach ($users as $user) {
+            $project->users()->attach($user['id'], ['role' => $user['role']]);
         }
     }
 }

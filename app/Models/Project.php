@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Project\ProjectStatusEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Project extends Model
 {
@@ -19,4 +20,16 @@ class Project extends Model
     protected $casts = [
         'status' => ProjectStatusEnum::class,
     ];
+
+    public function createBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(User::class, 'project_user', 'project_id', 'user_id')
+            ->withPivot(['role']);
+    }
 }

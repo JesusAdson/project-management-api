@@ -2,7 +2,8 @@
 
 namespace App\Http\Resources\Project;
 
-use App\Enums\Project\ProjectStatusEnum;
+use App\Enums\Project\{ProjectStatusEnum, ProjectUserRoleEnum};
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +24,14 @@ class ProjectResource extends JsonResource
             'end_date'    => $this->end_date,
             'status'      => $this->status?->getLabel() ?? ProjectStatusEnum::ACTIVE->getLabel(),
             'created_by'  => $this->createdBy?->name ?? null,
+            'users'       => $this->users->map(
+                fn (User $user) => [
+                    'id'    => $user->id,
+                    'name'  => $user->name,
+                    'email' => $user->email,
+                    'role'  => ProjectUserRoleEnum::getType($user->getOriginal()['pivot_role'])->getLabel(),
+                ]
+            ),
         ];
     }
 }

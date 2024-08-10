@@ -15,3 +15,12 @@ Route::prefix('/projects')
         Route::put('/{project_id}', \App\Actions\Project\UpdateProject::class);
         Route::delete('/{project_id}', \App\Actions\Project\DeleteProject::class);
     });
+
+Route::prefix('/users')
+    ->group(function () {
+        Route::get('/', \App\Actions\Users\ListUser::class);
+        Route::post('/', \App\Actions\Users\CreateUser::class);
+        Route::get('/{user_id}', \App\Actions\Users\ShowUser::class);
+        Route::put('/{user_id}', \App\Actions\Users\UpdateUser::class);
+        Route::delete('/{user_id}', \App\Actions\Users\DeleteUser::class);
+    });
