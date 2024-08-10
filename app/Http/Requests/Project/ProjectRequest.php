@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Project;
 
+use App\Enums\Project\ProjectUserRoleEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProjectRequest extends FormRequest
 {
@@ -28,6 +30,8 @@ class ProjectRequest extends FormRequest
             'start_date'  => 'required',
             'end_date'    => 'required',
             'status'      => ['sometimes', 'int'],
+            'users.*.id' => ['required', 'int'],
+            'users.*.role' => Rule::enum(ProjectUserRoleEnum::class)
         ];
     }
 }

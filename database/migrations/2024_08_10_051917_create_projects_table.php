@@ -22,6 +22,15 @@ return new class () extends Migration {
 
             $table->foreign('created_by')->references('id')->on('users');
         });
+
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('user_id');
+            $table->enum('role', ['admin', 'member']);
+
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -29,6 +38,7 @@ return new class () extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('project_user');
         Schema::dropIfExists('projects');
     }
 };
