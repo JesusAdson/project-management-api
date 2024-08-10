@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->string('description')->nullable();
             $table->date('start_date');
             $table->date('end_date');
+            $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
 

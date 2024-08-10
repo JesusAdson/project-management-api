@@ -9,5 +9,9 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('/projects')
     ->group(function () {
+        Route::get('/', \App\Actions\Project\ListProject::class);
         Route::post('/', \App\Actions\Project\CreateProject::class);
+        Route::get('/{project_id}', \App\Actions\Project\ShowProject::class);
+        Route::put('/{project_id}', \App\Actions\Project\UpdateProject::class);
+        Route::delete('/{project_id}', \App\Actions\Project\DeleteProject::class);
     });

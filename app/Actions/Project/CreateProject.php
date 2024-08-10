@@ -2,6 +2,7 @@
 
 namespace App\Actions\Project;
 
+use App\Exceptions\DefaultException;
 use App\Http\Requests\Project\ProjectRequest;
 use App\Http\Resources\Project\ProjectResource;
 use App\Models\Project;
@@ -11,11 +12,11 @@ use Illuminate\Support\Facades\DB;
 class CreateProject
 {
     /**
-     * @throws Exception
+     * @throws DefaultException
      */
     public function __invoke(ProjectRequest $request): ProjectResource
     {
-        $data = $request->validated();
+        $data = [...$request->validated(), 'created_by' => 1];
 
         DB::beginTransaction();
 
@@ -27,7 +28,7 @@ class CreateProject
         } catch (Exception $e) {
             DB::rollBack();
 
-            throw new Exception($e->getMessage(), 422);
+            throw new DefaultException($e->getMessage());
         }
     }
 }

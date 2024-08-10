@@ -27,6 +27,7 @@ class ProjectRequest extends FormRequest
             'description' => ['sometimes', 'string', 'max:200'],
             'start_date'  => 'required',
             'end_date'    => 'required',
+            'status'      => ['sometimes', 'int'],
         ];
     }
 }
