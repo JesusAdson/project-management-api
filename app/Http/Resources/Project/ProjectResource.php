@@ -15,12 +15,12 @@ class ProjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
+            'id'          => $this->id,
+            'name'        => $this->name,
             'description' => $this->description,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'created_by' => $this->createdBy?->name ?? null
+            'start_date'  => $this->start_date,
+            'end_date'    => $this->end_date,
+            'created_by'  => $this->createdBy?->name ?? null,
         ];
     }
 }

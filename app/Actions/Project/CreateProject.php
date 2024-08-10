@@ -6,7 +6,6 @@ use App\Http\Requests\Project\ProjectRequest;
 use App\Http\Resources\Project\ProjectResource;
 use App\Models\Project;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class CreateProject
@@ -27,6 +26,7 @@ class CreateProject
             return new ProjectResource($project);
         } catch (Exception $e) {
             DB::rollBack();
+
             throw new Exception($e->getMessage(), 422);
         }
     }
