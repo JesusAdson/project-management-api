@@ -61,8 +61,8 @@ class User extends Authenticatable
             ->withPivot(['role']);
     }
 
-    public function inProject(int $project_id): bool
+    public function tasks(): BelongsToMany
     {
-        return $this->projects()->wherePivot('project_id', $project_id)->exists();
+        return $this->belongsToMany(Task::class, 'task_user', 'user_id', 'task_id');
     }
 }
