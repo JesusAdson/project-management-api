@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests\Task;
 
-use App\Enums\Task\TaskPriorityEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TaskRequest extends FormRequest
+class UpdateTaskStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +24,7 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'        => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['sometimes', 'string', 'max:200'],
-            'priority'    => Rule::enum(TaskPriorityEnum::class),
-            'status'      => ['sometimes', Rule::enum(TaskStatusEnum::class)],
-            'start_date'  => 'required',
-            'end_date'    => 'required',
-            'user_id'     => ['required', 'exists:users,id'],
+            'status' => Rule::enum(TaskStatusEnum::class),
         ];
     }
 }

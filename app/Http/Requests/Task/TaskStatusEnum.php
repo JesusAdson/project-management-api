@@ -4,16 +4,16 @@ namespace App\Http\Requests\Task;
 
 enum TaskStatusEnum: int
 {
-    case PENDING   = 0;
+    case PENDING     = 0;
     case IN_PROGRESS = 1;
-    case FINISHED = 2;
+    case FINISHED    = 2;
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::PENDING   => 'Pending',
+            self::PENDING     => 'Pending',
             self::IN_PROGRESS => 'In progress',
-            self::FINISHED => 'Finished',
+            self::FINISHED    => 'Finished',
         };
     }
 

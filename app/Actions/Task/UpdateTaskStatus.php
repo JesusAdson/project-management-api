@@ -3,26 +3,26 @@
 namespace App\Actions\Task;
 
 use App\Exceptions\DefaultException;
-use App\Http\Requests\Task\TaskRequest;
+use App\Http\Requests\Task\UpdateTaskStatusRequest;
 use App\Http\Resources\Task\TaskResource;
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
-class CreateTask
+class UpdateTaskStatus
 {
     /**
      * @throws DefaultException
      */
-    public function __invoke(TaskRequest $request, int $project_id): TaskResource
+    public function __invoke(UpdateTaskStatusRequest $request, int $project_id, int $task_id): TaskResource
     {
-        $data = [...$request->validated(), 'project_id' => $project_id, 'created_by' => 1];
+        $data = $request->validated();
 
         DB::beginTransaction();
 
         try {
-            $task = Task::query()->create($data);
-            $this->attachUsers($task, [$data['user_id']]);
+            $task         = Task::query()->find($task_id);
+            $task->status = $data['status'];
             DB::commit();
 
             return new TaskResource($task);
@@ -31,11 +31,5 @@ class CreateTask
 
             throw new DefaultException($e->getMessage());
         }
-
-    }
-
-    private function attachUsers(Task $task, array $users): void
-    {
-        $task->users()->attach($users);
     }
 }
