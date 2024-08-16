@@ -60,4 +60,9 @@ class User extends Authenticatable
             )
             ->withPivot(['role']);
     }
+
+    public function tasks(): BelongsToMany
+    {
+        return $this->belongsToMany(Task::class, 'task_user', 'user_id', 'task_id');
+    }
 }
