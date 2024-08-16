@@ -60,4 +60,9 @@ class User extends Authenticatable
             )
             ->withPivot(['role']);
     }
+
+    public function inProject(int $project_id): bool
+    {
+        return $this->projects()->wherePivot('project_id', $project_id)->exists();
+    }
 }

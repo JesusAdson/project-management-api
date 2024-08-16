@@ -14,6 +14,11 @@ Route::prefix('/projects')
         Route::get('/{project_id}', \App\Actions\Project\ShowProject::class);
         Route::put('/{project_id}', \App\Actions\Project\UpdateProject::class);
         Route::delete('/{project_id}', \App\Actions\Project\DeleteProject::class);
+
+        Route::prefix('{project_id}/tasks')
+            ->group(function () {
+                Route::post('/', \App\Actions\Task\CreateTask::class);
+            });
     });
 
 Route::prefix('/users')
